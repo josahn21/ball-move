@@ -10,24 +10,30 @@
       var ball = new ball();//Create a global object
       var ballTwo = new ballTwo();
       var d;
+      var r;
+      var g;
+      var b;
       function setup() {
         createCanvas(w,h);
       }
       
       function draw() {
-        background(255);
+        r = random(256);
+        g = random(256);
+        b = random(256);
+        background(b,g,r);
         ball.show();
         ball.move();
         ballTwo.show();
         ballTwo.move();
-        ballTwo.collision();
+        ballTwo.contact();
       }
       
       function ball() {
         this.x = 100;
         this.y = 100;
         this.show = function() {
-          fill(color('red'));
+          fill(color(r,g,b));
           ellipse(this.x, this.y, 50, 50);
         }
         this.move = function() {
@@ -49,10 +55,10 @@
       }
       
       function ballTwo() {
-        this.x = 150;
+        this.x = 200;
         this.y = 100;
         this.show = function() {
-          fill(color('yellow'));
+          fill(color(g,r,b));
           ellipse(this.x, this.y, 50, 50);
         }
         this.move = function() {
@@ -68,10 +74,11 @@
            if ((keyIsDown(75)) && (this.y < h-50)) {
         this.y += 20;
       }
-        this.collision = function() {
-          d = dist(this.x, this.y, ballTwo.x2, ballTwo.y2);
-           if (d < 50) {
+        this.contact = function() {
+          d = dist(this.x, this.y, ball.x, ball.y);
+           if (d < 40) {
              noLoop();
+             window.alert("Game Over");
            }
         }
         }
